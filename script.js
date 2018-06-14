@@ -26,7 +26,6 @@ function runTimer(){
     timer[3]++;
 
 
-
     //minutes dividing by 100 to get seconds, and dividing by 60 to get minutes
     timer[0] = Math.floor((timer[3]/100/60))
 
@@ -43,11 +42,31 @@ function runTimer(){
 
 
 // Match the text entered with the provided text on the page:
-function spellCheck(){
-    let textEntered = testArea.value.length;
+function spellCheck() {
+    let textEntered = testArea.value;
 
-    console.log(textEntered)
+    // This is color feedback to the player know if and when hes made a typing mistake:
+    //Substring treats a string of text as an array and allows to specify a
+    // section within a text to pull out and use as a substring, substring(start,howmanycharacters)
+    let originTextMatch = originText.substring(0, textEntered.length)
+    
+    //If text maatches text in total, we are done and border is green
+   if (textEntered == originText) {
+        testWrapper.style.borderColor = "#33cc33";
+    } else {
+        // If text matches part but not done in whole border is blue
+        if (textEntered == originTextMatch) {
+            testWrapper.style.borderColor = "#0000ff";
+        } else {
+            //else its wrong and its red
+            testWrapper.style.borderColor = "#ff0000";
+        }
+    }
+
+
 }
+
+
 
 // Start the timer:
 function startTimer(){
