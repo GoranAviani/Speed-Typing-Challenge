@@ -7,6 +7,7 @@ const theTimer = document.querySelector(".timer");
     //minutes, seconds, hundrens of seconds, thousends of seconds
  let timer = [0,0,0,0];
  let interval;
+ let timerRunnging = false;
 
 // Add leading zero to numbers 9 or below (purely for aesthetics):
 function leadingZero(time){
@@ -51,17 +52,17 @@ function spellCheck() {
     // section within a text to pull out and use as a substring, substring(start,howmanycharacters)
     let originTextMatch = originText.substring(0, textEntered.length)
 
-    //If text maatches text in total, we are done and border is green
+    //If writen text maatches text in total, it is are done and border is green
    if (textEntered == originText) {
         //Interval is cleared and the clock stops
         clearInterval(interval)
         testWrapper.style.borderColor = "#33cc33";
     } else {
-        // If text matches part but not done in whole border is blue
+        // If text matches part but is still not finished border is blue
         if (textEntered == originTextMatch) {
             testWrapper.style.borderColor = "#0000ff";
         } else {
-            //else its wrong and its red
+            //else its wrong so the border is red
             testWrapper.style.borderColor = "#ff0000";
         }
     }
@@ -76,8 +77,9 @@ function startTimer(){
     let textEnteredLength = testArea.value.length;
     console.log(textEnteredLength)
 
-    //When the first key is pressed start the timer runTimer
-    if (textEnteredLength === 0){
+    //When the first key is pressed start the interval timer runTimer
+    if (textEnteredLength === 0 && !timerRunnging){
+        timerRunnging = true
         interval = setInterval(runTimer, 10);
     }
 
