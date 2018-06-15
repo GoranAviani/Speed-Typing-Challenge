@@ -7,7 +7,9 @@ const theTimer = document.querySelector(".timer");
     //minutes, seconds, hundrens of seconds, thousends of seconds
  let timer = [0,0,0,0];
  let interval;
- let timerRunnging = false;
+ //isTimerRunning boolean is for preventing the timer to continue when user
+// deleted all and starts typing again. ie, When the game is over, it's over :)
+ let isTimerRunning = false;
 
 // Add leading zero to numbers 9 or below (purely for aesthetics):
 function leadingZero(time){
@@ -60,10 +62,10 @@ function spellCheck() {
     } else {
         // If text matches part but is still not finished border is blue
         if (textEntered == originTextMatch) {
-            testWrapper.style.borderColor = "#0000ff";
+            testWrapper.style.borderColor = "#0000cc";
         } else {
             //else its wrong so the border is red
-            testWrapper.style.borderColor = "#ff0000";
+            testWrapper.style.borderColor = "#cc3300";
         }
     }
 
@@ -78,8 +80,8 @@ function startTimer(){
     console.log(textEnteredLength)
 
     //When the first key is pressed start the interval timer runTimer
-    if (textEnteredLength === 0 && !timerRunnging){
-        timerRunnging = true
+    if (textEnteredLength === 0 && !isTimerRunning){
+        isTimerRunning = true
         interval = setInterval(runTimer, 10);
     }
 
@@ -87,7 +89,22 @@ function startTimer(){
 
 // Reset everything:
 function resetText() {
-    console.log("Reset btn is pressed");
+    //Backend reset:
+    clearInterval(interval);
+    interval = null;
+    timer = [0,0,0,0];
+    isTimerRunning = false;
+
+    //Visual reset:
+    testArea.value = "";
+    theTimer.innerHTML = "00:00:00";
+    testWrapper.style.borderColor = "#757373";
+
+
+
+
+
+
 }
 
 // Event listeners for keyboard input and the reset button:
